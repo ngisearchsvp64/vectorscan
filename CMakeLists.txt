@@ -115,7 +115,6 @@ if(DEBUG_OUTPUT)
     set(RELEASE_BUILD FALSE)
 endif(DEBUG_OUTPUT)
 
-
 #for config
 if (RELEASE_BUILD)
     set(HS_OPTIMIZE ON)
@@ -129,7 +128,15 @@ include (${CMAKE_MODULE_PATH}/platform.cmake)
 # Detect OS and if Fat Runtime is available
 include (${CMAKE_MODULE_PATH}/osdetection.cmake)
 
-if(SIMDE_BACKEND)
+if (SVP64)
+    set(FAT_RUNTIME FALSE)
+    include (${CMAKE_MODULE_PATH}/simde.cmake)
+    set(ARCH_C_FLAGS "-DBUILD_SVP64")
+    set(ARCH_CXX_FLAGS "-DBUILD_SVP64")
+    set(X86_ARCH "x86-64")
+    include_directories(../openpower-isa/media/pypowersim_wrapper)
+    include_directories(/usr/include/python3.7m)
+elseif(SIMDE_BACKEND)
     include (${CMAKE_MODULE_PATH}/simde.cmake)
 elseif (ARCH_IA32 OR ARCH_X86_64)
     include (${CMAKE_MODULE_PATH}/cflags-x86.cmake)
@@ -898,6 +905,12 @@ endif()
 
 set (LIB_VERSION ${HS_VERSION})
 set (LIB_SOVERSION ${HS_MAJOR_VERSION})
+
+if (SVP64)
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lpython3.7m")
+    #set (CMAKE_STATIC_LINKER_FLAGS "${CMAKE_STATIC_LINKER_FLAGS} -lpython3.7m")
+    set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -lpython3.7m")
+endif()
 
 if (NOT FAT_RUNTIME)
     set(hs_exec_SRCS ${hs_exec_SRCS} ${hs_exec_common_SRCS})
