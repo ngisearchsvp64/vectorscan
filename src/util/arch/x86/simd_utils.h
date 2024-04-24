@@ -80,10 +80,12 @@ static really_inline m128 not128(m128 a) {
     return (m128) _mm_xor_si128(a, ones128());
 }
 
+#ifndef BUILD_SVP64
 /** \brief Return 1 if a and b are different otherwise 0 */
 static really_inline int diff128(m128 a, m128 b) {
     return (_mm_movemask_epi8(_mm_cmpeq_epi8(a, b)) ^ 0xffff);
 }
+#endif // BUILD_SVP64
 
 static really_inline int isnonzero128(m128 a) {
     return !!diff128(a, zeroes128());
@@ -207,6 +209,7 @@ m128 rshiftbyte_m128(const m128 a, int count_immed) {
 }
 #undef CASE_RSHIFT_VECTOR
 
+#ifndef BUILD_SVP64
 #define CASE_LSHIFT_VECTOR(a, count)  case count: return _mm_slli_si128((m128)(a), (count)); break;
 
 static really_inline
@@ -237,6 +240,7 @@ m128 lshiftbyte_m128(const m128 a, int count_immed) {
     }
 }
 #undef CASE_LSHIFT_VECTOR
+#endif // BUILD_SVP64
 
 #if defined(HAVE_SSE41)
 #define extract32from128(a, imm) _mm_extract_epi32(a, imm)
@@ -360,10 +364,12 @@ char testbit128(m128 val, unsigned int n) {
 // offset must be an immediate
 #define palignr_imm(r, l, offset) _mm_alignr_epi8(r, l, offset)
 
+#ifndef BUILD_SVP64
 static really_inline
 m128 pshufb_m128(m128 a, m128 b) {
     return _mm_shuffle_epi8(a, b);
 }
+#endif // BUILD_SVP64
 
 #define CASE_ALIGN_VECTORS(a, b, offset)  case offset: return palignr_imm((m128)(a), (m128)(b), (offset)); break;
 
