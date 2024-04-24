@@ -51,6 +51,9 @@
 /* Define if building AVX512VBMI in the fat runtime. */
 #cmakedefine BUILD_AVX512VBMI
 
+/* Define if building SVP64 support */
+#cmakedefine BUILD_SVP64
+
 /* Define to 1 if `backtrace' works. */
 #cmakedefine HAVE_BACKTRACE
 
