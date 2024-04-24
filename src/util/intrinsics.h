@@ -63,6 +63,7 @@
 # endif
 #endif
 
+#if !defined(BUILD_SVP64)
 #if defined(USE_X86INTRIN_H)
 #include <x86intrin.h>
 #elif defined(USE_INTRIN_H)
@@ -74,6 +75,7 @@
 #  endif
 #elif defined(USE_PPC64EL_ALTIVEC_H)
 #include <altivec.h>
+#endif
 #endif
 
 #endif // INTRINSICS_H

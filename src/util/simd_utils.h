@@ -62,6 +62,10 @@ extern const char vbs_mask_data[];
 }
 #endif
 
+#if defined(BUILD_SVP64)
+#include "util/arch/svp64/simd_utils.h"
+#include "util/arch/x86/simd_utils.h"
+#else
 #if defined(VS_SIMDE_BACKEND)
 #include "util/arch/x86/simd_utils.h"
 #else
@@ -71,6 +75,7 @@ extern const char vbs_mask_data[];
 #include "util/arch/arm/simd_utils.h"
 #elif defined(ARCH_PPC64EL)
 #include "util/arch/ppc64el/simd_utils.h"
+#endif
 #endif
 #endif
 

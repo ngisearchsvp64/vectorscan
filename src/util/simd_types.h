@@ -35,7 +35,7 @@
 #include "util/intrinsics.h"
 #include "ue2common.h"
 
-#if defined(VS_SIMDE_BACKEND)
+#if defined(VS_SIMDE_BACKEND) || defined(BUILD_SVP64)
 #define VECTORSIZE 16
 #define SIMDE_ENABLE_NATIVE_ALIASES
 #if !defined(VS_SIMDE_NATIVE)
