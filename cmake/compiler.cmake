@@ -11,7 +11,7 @@ endif()
 
 # compiler version checks TODO: test more compilers
 if (CMAKE_COMPILER_IS_GNUCXX)
-    set(GNUCXX_MINVER "9")
+    set(GNUCXX_MINVER "8")
     message(STATUS "g++ version ${CMAKE_CXX_COMPILER_VERSION}")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS GNUCXX_MINVER)
         message(FATAL_ERROR "A minimum of g++ ${GNUCXX_MINVER} is required for C++17 support")
